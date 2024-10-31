@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Contact Number</th>
+            <th>Service Type</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>ZIP</th>
+        </tr>
+        {% for contact_number, details in appointments.items() %}
+        <tr>
+            <td>{{ contact_number[:3] + '*******' }}</td>
+            <td>{{ details.service_type }}</td>
+            <td>{{ details.name }}</td>
+            <td>{{ details.date }}</td>
+            <td>{{ details.time }}</td>
+            <td>{{ details.address }}</td>
+            <td>{{ details.city }}</td>
+            <td>{{ details.state }}</td>
+            <td>{{ details.zip }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html> 
