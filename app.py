@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template
-from signalwire_swaig.core import SWAIG, Parameter
+from signalwire_swaig.core import SWAIG, SWAIGArgument
 from dotenv import load_dotenv
 import os
 
@@ -12,21 +12,21 @@ swaig = SWAIG(app, auth=(os.getenv('HTTP_USERNAME'), os.getenv('HTTP_PASSWORD'))
 appointments = {}
 
 @swaig.endpoint("Manage appointment actions for HVAC, plumbing, or electrical needs",
-                action=Parameter("string", "Type of action to perform", enum=["schedule", "update", "escalate", "search", "cancel"], required=True),
-                service_type=Parameter("string", "Type of service required", enum=["HVAC", "plumbing", "electrical"]),
-                name=Parameter("string", "Customer's full name"),
-                contact_number=Parameter("string", "Customer's phone number", required=True),
-                date=Parameter("string", "Preferred appointment date"),
-                time=Parameter("string", "Preferred appointment time"),
-                address=Parameter("string", "Street address for the service"),
-                city=Parameter("string", "City for the service address"),
-                state=Parameter("string", "State for the service address", enum=["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+                action=SWAIGArgument("string", "Type of action to perform", enum=["schedule", "update", "escalate", "search", "cancel"], required=True),
+                service_type=SWAIGArgument("string", "Type of service required", enum=["HVAC", "plumbing", "electrical"]),
+                name=SWAIGArgument("string", "Customer's full name"),
+                contact_number=SWAIGArgument("string", "Customer's phone number", required=True),
+                date=SWAIGArgument("string", "Preferred appointment date"),
+                time=SWAIGArgument("string", "Preferred appointment time"),
+                address=SWAIGArgument("string", "Street address for the service"),
+                city=SWAIGArgument("string", "City for the service address"),
+                state=SWAIGArgument("string", "State for the service address", enum=["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
                                                                                     "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
                                                                                     "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
                                                                                     "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
                                                                                     "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]),
-                zip=Parameter("string", "5-digit ZIP code for the service address"),
-                emergency_description=Parameter("string", "Detailed description of the emergency situation"))
+                zip=SWAIGArgument("string", "5-digit ZIP code for the service address"),
+                emergency_description=SWAIGArgument("string", "Detailed description of the emergency situation"))
 def manage_appointment(action, service_type=None, name=None, contact_number=None, date=None, time=None, address=None, city=None, state=None, zip=None, emergency_description=None, meta_data_token=None, meta_data=None):
     if action == "schedule":
         appointments[contact_number] = {
