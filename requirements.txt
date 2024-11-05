@@ -1,3 +1,4 @@
 Flask==3.0.3
-flask_httpauth==4.8.0
+Flask_HTTPAuth==4.8.0
 python-dotenv==1.0.1
+signalwire_swaig==0.1.11
