@@ -1,12 +1,26 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask
 from signalwire_swaig.core import SWAIG, SWAIGArgument
 from dotenv import load_dotenv
 import os
+import logging
+import random
 
 load_dotenv()
 
+logging.getLogger('werkzeug').setLevel(logging.WARNING)
+
+if os.environ.get('DEBUG'):
+    print("Debug mode is enabled")
+    debug_pin = f"{random.randint(100, 999)}-{random.randint(100, 999)}-{random.randint(100, 999)}"
+    os.environ['WERKZEUG_DEBUG_PIN'] = debug_pin
+    logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+    print(f"Debugger PIN: {debug_pin}")
+
 app = Flask(__name__)
-swaig = SWAIG(app, auth=(os.getenv('HTTP_USERNAME'), os.getenv('HTTP_PASSWORD')))
+swaig = SWAIG(
+    app,
+    auth=(os.getenv('HTTP_USERNAME'), os.getenv('HTTP_PASSWORD'))
+)
 
 # Mock storage for appointments
 appointments = {}
